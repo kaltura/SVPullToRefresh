@@ -11,8 +11,8 @@
 #import "UIScrollView+SVInfiniteScrolling.h"
 
 
-static CGFloat const SVInfiniteScrollingViewWidth = 60;
-static CGFloat const SVInfiniteScrollingViewHeight = 60;
+static CGFloat const SVInfiniteScrollingViewWidth = 0;
+static CGFloat const SVInfiniteScrollingViewHeight = 0;
 
 @interface SVInfiniteScrollingDotView : UIView
 
@@ -222,7 +222,7 @@ UIEdgeInsets scrollViewOriginalContentInsets;
         if (self.direction == SVInfiniteScrollingDirectionVertical)
         {
             CGFloat scrollViewContentHeight = self.scrollView.contentSize.height;
-            CGFloat scrollOffsetThreshold = scrollViewContentHeight-self.scrollView.bounds.size.height;
+            CGFloat scrollOffsetThreshold = scrollViewContentHeight-self.scrollView.bounds.size.height - self.offsetToTriggerLoading;
             
             if(!self.scrollView.isDragging && self.state == SVInfiniteScrollingStateTriggered)
                 self.state = SVInfiniteScrollingStateLoading;
@@ -234,11 +234,11 @@ UIEdgeInsets scrollViewOriginalContentInsets;
         else if (self.direction == SVInfiniteScrollingDirectionHorizontal)
         {
             CGFloat scrollViewContentWidth = self.scrollView.contentSize.width;
-            CGFloat scrollOffsetThreshold = scrollViewContentWidth-self.scrollView.bounds.size.width;
+            CGFloat scrollOffsetThreshold = scrollViewContentWidth-self.scrollView.bounds.size.width - self.offsetToTriggerLoading;
             
             if(!self.scrollView.isDragging && self.state == SVInfiniteScrollingStateTriggered)
                 self.state = SVInfiniteScrollingStateLoading;
-            else if(contentOffset.x > scrollOffsetThreshold && self.state == SVInfiniteScrollingStateStopped && self.scrollView.isDragging)
+            else if(contentOffset.x >= scrollOffsetThreshold && self.state == SVInfiniteScrollingStateStopped && self.scrollView.isDragging)
                 self.state = SVInfiniteScrollingStateTriggered;
             else if(contentOffset.x < scrollOffsetThreshold  && self.state != SVInfiniteScrollingStateStopped)
                 self.state = SVInfiniteScrollingStateStopped;
@@ -249,12 +249,13 @@ UIEdgeInsets scrollViewOriginalContentInsets;
 #pragma mark - Getters
 
 - (UIActivityIndicatorView *)activityIndicatorView {
-    if(!_activityIndicatorView) {
+    if(!_activityIndicatorView && self.showActivityIndicator) {
         _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
         _activityIndicatorView.hidesWhenStopped = YES;
         [self addSubview:_activityIndicatorView];
     }
     return _activityIndicatorView;
+    return nil;
 }
 
 - (UIActivityIndicatorViewStyle)activityIndicatorViewStyle {

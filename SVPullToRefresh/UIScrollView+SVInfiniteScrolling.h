@@ -41,6 +41,8 @@ typedef NS_OPTIONS(NSUInteger, SVInfiniteScrollingState) {
 @property (nonatomic, readwrite) UIActivityIndicatorViewStyle activityIndicatorViewStyle;
 @property (nonatomic, readonly) SVInfiniteScrollingState state;
 @property (nonatomic, readwrite) BOOL enabled;
+@property (nonatomic, readwrite) float offsetToTriggerLoading;
+@property (nonatomic, readwrite) BOOL showActivityIndicator;
 
 - (void)setCustomView:(UIView *)view forState:(SVInfiniteScrollingState)state;
 

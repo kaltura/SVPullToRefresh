@@ -336,6 +336,8 @@ UIEdgeInsets scrollViewOriginalContentInsets;
             case SVInfiniteScrollingStateLoading:
                 [self.activityIndicatorView startAnimating];
                 break;
+            case SVInfiniteScrollingStateAll:
+                break;
         }
     }
     

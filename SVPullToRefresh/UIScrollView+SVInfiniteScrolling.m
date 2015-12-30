@@ -12,7 +12,7 @@
 
 
 static CGFloat const SVInfiniteScrollingViewWidth = 0;
-static CGFloat const SVInfiniteScrollingViewHeight = 0;
+static CGFloat const SVInfiniteScrollingViewHeight = 50;
 
 @interface SVInfiniteScrollingDotView : UIView
 
